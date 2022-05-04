@@ -150,3 +150,18 @@ const me = new Person('Lee');
 console.log(Person.prototype == me.__proto__); // 함수 객체 Person의 prototype과 일반 객체 me의 __proto__이 가리키는 대상이 동일함 (Object.prototype)
 
 /** [ 프로토타입의 constructor 프로퍼티와 생성자 함수 ] */
+
+//----------------------------------------------------------------------------------------------------------------------------------
+
+/** Object.keys 메서드 
+ * => 객체 자신의 열거 가능한 프로퍼티 키를 배열로 반환한다
+ */
+
+const person = {
+    name: 'Lee',
+    address: 'Seoul',
+    __proto__: {age: 20}
+};
+
+console.log(Object.keys(person)); // 객체의 key를 배열로 반환
+console.log(Object.values(person)); // 객체의 value를 배열로 반환
