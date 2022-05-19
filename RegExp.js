@@ -16,9 +16,7 @@ console.log(regExp.test(tel)); // -> false
 // => 정규표현식을 사용하면 반복문이나 조건문 없이 패턴를 정의하고 테스트하는 것으로 간단하게 체크 할 수 있다
 
 /** [ 정규표현식의 생성 ]
- * 1. 정규표현식 리터럴 
- * - pattern : 
- * - flag : 
+ * 1. 정규표현식 리터럴  
  * 2. RegExp 생성자 함수 
  */
 
@@ -58,7 +56,7 @@ console.log(count('Is this all there is?', 'xx')); // 0
  * 종류 : RegExp.prototype.exec, RegExp.prototype.test, RegExp.prototype.match 
 */
 
-/** RegExp.prototype.exec
+/** RegExp.prototype.exec 
  * - exec 메서드는 인수로 전달받은 문자열에 대해 정규표현식의 패턴을 검색하여 매칭 결과를 배열로 반환한다
  * - 매칭 결과가 없는 경우 null로 반환한다
  * - 문자열 내의 모든 패턴을 검색하는 g플래그를 지정해도 첫 번째 매칭 결과만 반환 
@@ -191,6 +189,69 @@ console.log(target15.match(regExp15));
 // EX
 // 대소문자를 구별하지 않고 알파벳을 검색하는 방법 
 const target16 = 'AA BB Aa Bb 12';
-// 'A' ~ 'Z' 또는 a' ~ 'z'가 한 번 이상 반복되는 문자열을 전역 탐색 
+// 'A' ~ 'Z' 또는 'a' ~ 'z'가 한 번 이상 반복되는 문자열을 전역 탐색 
 const regExp16 = /[A-Za-z]+/g;
 console.log(target16.match(regExp16)); // 숫자 제외 모두 탐색 
+
+// EX
+// 숫자 검색하는 방법 
+const target17 = 'AA BB 12,345';
+// 0 ~ 9가 한 번 이상 반복되는 문자열을 전역 검색한다 
+const regExp17 = /[0-9]+/g;
+console.log(target17.match(regExp17));
+// 쉼표 때문에 매칭 결과가 분리되므로 쉼표를 패턴에 포함시킴 
+
+// EX
+const target18 = 'AA BB 12,345';
+// 0 ~ 9 또는 ','가 한 번 이상 반복되는 문자열을 전역 검색한다
+const regExp18 = /[0-9,]+/g;
+console.log(target18.match(regExp18));
+
+// EX 
+// \d는 숫자를 의미한다 ( \d = [0-9] ) \D는 문자를 의미한다 
+const target19 = 'AA BB 12,345';
+let regExp19 = /[\d,]+/g;
+console.log(target19.match(regExp19));
+
+regExp19 = /[\D,]+/g;
+console.log(target19.match(regExp19));
+
+// \w는 알파벳, 숫자, 언더스코어를 의미한다 ( \w = [A-Za-z0-9_] ) \W는 알파벳, 숫자, 언더스코어가 아닌 문자를 의미한다
+const target20 = 'Aa Bb 12,345 _$%&';
+// 알파벳, 숫자, 언더스코어, ','가 한 번 이상 반복되는 문자열을 전역 탐색한다
+let regExp20 = /[\w,]+/g;
+target20.match(regExp20);
+// 알파벳, 숫자, 언더스코어가 아닌 문자 또는 ','가 한 번 이상 반복되는 문자열을 전역 탐색
+regExp20 = /[\W,]+/g;
+console.log(target20.match(regExp20));
+
+/** [ NOT 탐색 ]
+ * [] 내의 ^은 not의 의미를 갖는다 
+ * - [^0-9]는 숫자를 제외한 문자를 의미함 => /d는 [0-9]와 같으므로, 이와 반대로 동작하는 /D가 [^0-9]와 같다 w의 경우도 마찬가지이다
+ */
+
+// EX 
+const target21 = 'AA BB 12 Aa Bb';
+
+// 숫자를 제외한 문자열을 전역 탐색
+const regExp21 = /[^0-9]+/g;
+console.log(target21.match(regExp21));
+
+/** [ 시작 위치로 검색 ]
+ * [] 밖의 ^은 문자열의 시작을 의미한다
+ */
+
+// EX 
+const target22 = 'https://poiemaweb.com';
+// https로 시작하는지 검사
+const regExp22 = /^https/;
+console.log(regExp22.test(target22));
+
+/** [ 마지막 위치로 검색 ] 
+ * $는 문자열의 마지막을 의미한다 
+*/
+
+// EX 
+const target23 = 'https://poiemaweb.com';
+const regExp23 = /com$/;
+console.log(regExp23.test(target23));
