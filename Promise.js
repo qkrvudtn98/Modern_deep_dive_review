@@ -18,7 +18,7 @@
  * => Promise 생성 : executor 함수가 자동으로 실행!
 */
 
-const promise = new Promise((resolve, reject) => {
+/* const promise = new Promise((resolve, reject) => {
     // 무거운 작업들을 수행할 것임 (네트워크나 파일을 읽어오는 등의 작업을 동기적으로 수행하면 작업을 수행하는 동안 시간이 오래 걸리기 때문에 다른 작업을 진행할 수 없음 그래서 Promise의 비동기 작업을 통해 효율적으로 작업을 처리함)
     console.log('doing something...');
     // Promise를 만들어지는 순간 생성자에 있는 executor 콜백함수가 수행되는 것을 알 수 있음!
@@ -26,7 +26,7 @@ const promise = new Promise((resolve, reject) => {
         resolve('pyeongsoo');
         // reject(new Error('no network'));
     },2000);
-})
+}) */
 
 /** Promise 생성 => 인자인 executor 함수가 즉각적으로 실행 (네트워크 통신이 즉각적으로 일어남) 
  * 하지만 사용자가 버튼을 눌러 네트워크 통신을 해야하는 경우 이 방식은 옳지 않음! 
@@ -44,7 +44,7 @@ const promise = new Promise((resolve, reject) => {
  */
 
 
-promise
+/* promise
     .then((value) => {
         console.log(value);
     })
@@ -53,10 +53,10 @@ promise
     })
     .finally(error => {
         console.log('finally');
-    })
+    }) */
 
 // 3. Promise chaining
-const fetchNumber = new Promise((resolve, reject) => {
+/* const fetchNumber = new Promise((resolve, reject) => {
     setTimeout(() => resolve(1), 1000);
 })
 
@@ -91,4 +91,55 @@ getJja() //
     })
     .then(cook)
     .then(console.log)
-    .catch(console.log);
+    .catch(console.log); */
+
+/* 비동기 작업이 가질 수 있는 3가지 상태 : Pending, Fulfilled, Rejected */
+// Pending (대기상태) : 현재 비동기 작업이 진행중이거나 시작할 수도 없는 상태일 때를 나타냄 
+// Fulfilled : 비동기 작업이 정상적으로 이행된 상태를 의미함 
+// Rejected : 거부 or 실패를 의미하며, 비동기 작업이 실패한 상태를 의미함 (서버 지연 , 자동 취소 등)
+
+/* function isPositive(number, resolve, reject) {
+    setTimeout(()=> {
+        if(typeof number === 'number'){
+            // 성공 -> resolve
+            resolve(number >= 0 ? '양수' : '음수');
+        } else {
+            // 실패 -> reject
+            reject('주어진 값이 숫자형이 아닙니다.');
+        }
+    }, 2000);
+}
+
+isPositive([], (res)=>{
+    console.log('성공적으로 수행됨 :', res);    
+}, (err)=>{
+    console.log('실패 하였음 :', err);
+}); */
+
+function isPositiveP(number) {
+    const executor = (resolve, reject) => { // 실행자
+        setTimeout(()=>{
+            if(typeof number === 'number'){
+                // 성공 -> resolve
+                console.log(number);
+                resolve(number >= 0 ? '양수' : '음수');
+            } else {
+                // 실패 -> reject
+                reject('주어진 값이 숫자형이 아닙니다.');
+            }
+        }, 2000);
+    }
+
+    const asyncTask = new Promise(executor);
+    return asyncTask;
+};
+
+const res = isPositiveP([]);
+
+res
+    .then((res)=>{
+        console.log('작업 성공 : ', res);
+    })
+    .catch((err)=>{
+        console.log('작업 실패 : ', err);
+    });
