@@ -92,7 +92,7 @@ getJja() //
     .then(cook)
     .then(console.log)
     .catch(console.log); */
-
+// Promise : 비동기 처리의 결과값을 핸들링하는 코드를 비동기 함수로부터 분리할 수 있어짐 
 /* 비동기 작업이 가질 수 있는 3가지 상태 : Pending, Fulfilled, Rejected */
 // Pending (대기상태) : 현재 비동기 작업이 진행중이거나 시작할 수도 없는 상태일 때를 나타냄 
 // Fulfilled : 비동기 작업이 정상적으로 이행된 상태를 의미함 
